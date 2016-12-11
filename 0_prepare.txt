@@ -1,0 +1,5 @@
+# run me in google cloud platform console
+
+mkdir -p ~/project/codelog/workspace
+cd ~/project/codelog/workspace
+git clone https://github.com/luzi82/codelog.gcp.ml.git
