@@ -1,0 +1,16 @@
+# run me in google cloud platform console
+
+cd ~/project/codelog/workspace/codelog.gcp.ml/src
+
+JOB_NAME=codelog_${USER}_$(date +%Y%m%d_%H%M%S)
+PROJECT_ID=`gcloud config list project --format "value(core.project)"`
+TRAIN_BUCKET=gs://${PROJECT_ID}-ml
+TRAIN_PATH=${TRAIN_BUCKET}/${JOB_NAME}
+gsutil rm -rf ${TRAIN_PATH}
+gcloud beta ml jobs submit training ${JOB_NAME} \
+  --package-path=codelog \
+  --module-name=codelog.test_tf_save \
+  --staging-bucket="${TRAIN_BUCKET}" \
+  --region=us-central1 \
+  -- \
+  --output_path=${TRAIN_PATH}
