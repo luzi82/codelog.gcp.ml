@@ -13,4 +13,4 @@ gcloud beta ml jobs submit training ${JOB_NAME} \
   --staging-bucket="${TRAIN_BUCKET}" \
   --region=us-central1 \
   -- \
-  --output_path=${TRAIN_PATH}
+  --train_dir="${TRAIN_PATH}/train"

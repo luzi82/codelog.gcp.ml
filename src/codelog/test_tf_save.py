@@ -130,7 +130,9 @@ def run_training():
   # test on MNIST.
   data_sets = input_data.read_data_sets(tempfile.mkdtemp(), FLAGS.fake_data)
 
-  with open('{}/input_arg_dict.json'.format(FLAGS.train_dir),'w') as out_file:
+  fn = '{}/input_arg_dict.json'.format(FLAGS.train_dir)
+  os.makedirs(os.path.dirname(fn))
+  with open(fn,'w') as out_file:
     json.dump("asdf",out_file)
 
   # Tell TensorFlow that the model will be built into the default Graph.
