@@ -171,7 +171,7 @@ def run_training():
     sess = tf.Session()
 
     # Instantiate a SummaryWriter to output summaries and the Graph.
-    summary_writer = tf.train.SummaryWriter(train_dir, sess.graph)
+#     summary_writer = tf.train.SummaryWriter(train_dir, sess.graph)
 
     # And then after everything is built:
 
@@ -204,8 +204,8 @@ def run_training():
         print('Step %d: loss = %.2f (%.3f sec)' % (step, loss_value, duration))
         # Update the events file.
         summary_str = sess.run(summary_op, feed_dict=feed_dict)
-        summary_writer.add_summary(summary_str, step)
-        summary_writer.flush()
+#         summary_writer.add_summary(summary_str, step)
+#         summary_writer.flush()
 
       # Save a checkpoint and evaluate the model periodically.
       if (step + 1) % 1000 == 0 or (step + 1) == FLAGS.max_steps:
