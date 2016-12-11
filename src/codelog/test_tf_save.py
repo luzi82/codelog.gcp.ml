@@ -22,6 +22,7 @@ from __future__ import print_function
 import os.path
 import tempfile
 import time
+import argparse
 
 from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
@@ -40,10 +41,11 @@ flags.DEFINE_integer('hidden1', 128, 'Number of units in hidden layer 1.')
 flags.DEFINE_integer('hidden2', 32, 'Number of units in hidden layer 2.')
 flags.DEFINE_integer('batch_size', 100, 'Batch size.  '
                      'Must divide evenly into the dataset sizes.')
-flags.DEFINE_string('train_dir', 'data', 'Directory to put the training data.')
+#flags.DEFINE_string('train_dir', 'data', 'Directory to put the training data.')
 flags.DEFINE_boolean('fake_data', False, 'If true, uses fake data '
                      'for unit testing.')
 
+train_dir = None
 
 def placeholder_inputs(batch_size):
   """Generate placeholder variables to represent the input tensors.
@@ -169,7 +171,7 @@ def run_training():
     sess = tf.Session()
 
     # Instantiate a SummaryWriter to output summaries and the Graph.
-    summary_writer = tf.train.SummaryWriter(FLAGS.train_dir, sess.graph)
+    summary_writer = tf.train.SummaryWriter(train_dir, sess.graph)
 
     # And then after everything is built:
 
@@ -207,7 +209,7 @@ def run_training():
 
       # Save a checkpoint and evaluate the model periodically.
       if (step + 1) % 1000 == 0 or (step + 1) == FLAGS.max_steps:
-        checkpoint_file = os.path.join(FLAGS.train_dir, 'checkpoint')
+        checkpoint_file = os.path.join(train_dir, 'checkpoint')
         saver.save(sess, checkpoint_file, global_step=step)
         # Evaluate against the training set.
         print('Training Data Eval:')
@@ -237,4 +239,15 @@ def main(_):
 
 
 if __name__ == '__main__':
-  tf.app.run()
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument(
+        '--output_path',
+        type=str,
+        help='The path to which checkpoints and other outputs '
+        'should be saved. This can be either a local or GCS '
+        'path.',
+        default=None
+    )
+    args, _ = argparser.parse_known_args()
+    train_dir = args.output_path
+    tf.app.run()

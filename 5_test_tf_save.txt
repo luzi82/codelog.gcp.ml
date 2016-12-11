@@ -1,7 +1,7 @@
 # run me in google cloud platform console
 
 cd ~/project/codelog/workspace/codelog.gcp.ml/src
-
+git pull
 JOB_NAME=codelog_${USER}_$(date +%Y%m%d_%H%M%S)
 PROJECT_ID=`gcloud config list project --format "value(core.project)"`
 TRAIN_BUCKET=gs://${PROJECT_ID}-ml
@@ -13,4 +13,4 @@ gcloud beta ml jobs submit training ${JOB_NAME} \
   --staging-bucket="${TRAIN_BUCKET}" \
   --region=us-central1 \
   -- \
-  --train_dir="${TRAIN_PATH}"
+  --train_dir="${TRAIN_PATH}/asdf"
