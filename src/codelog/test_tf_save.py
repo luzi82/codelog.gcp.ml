@@ -136,7 +136,8 @@ def run_training():
     json.dump("asdf",out_file)
 
   # Tell TensorFlow that the model will be built into the default Graph.
-  with tf.Graph().as_default():
+  #with tf.Graph().as_default():
+  if True:
     # Generate placeholders for the images and labels.
     images_placeholder, labels_placeholder = placeholder_inputs(
         FLAGS.batch_size)
